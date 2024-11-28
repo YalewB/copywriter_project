@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Articles{% endblock %}
+{% block content %}
+<h1>Articles</h1>
+<a href="{% url 'article_create' %}" class="btn btn-success mb-3">Create New Article</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.title }}</td>
+            <td>
+                {% if article.status == 'draft' %}
+                <span class="badge bg-warning">Draft</span>
+                {% elif article.status == 'published' %}
+                <span class="badge bg-success">Published</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'article_detail' article.pk %}" class="btn btn-outline-info btn-sm">View</a>
+                <a href="{% url 'article_edit' article.pk %}" class="btn btn-outline-warning btn-sm">Edit</a>
+                <form action="{% url 'article_delete' article.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

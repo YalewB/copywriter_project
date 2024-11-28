@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ article.title }}</h1>
+<p><strong>Status:</strong> {{ article.get_status_display }}</p>
+<p><strong>Tags:</strong> {{ article.tags }}</p>
+<p><strong>Content:</strong></p>
+<p>{{ article.content }}</p>
+<p><strong>Last Updated:</strong> {{ article.updated_at|date:"M d, Y H:i" }}</p>
+<a href="{% url 'article_edit' article.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'article_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %}
